@@ -13,7 +13,11 @@ docker run --name SQL_Server \
 	--env MYSQL_USER=dolibarr \
 	--env MYSQL_PASSWORD=dolibarr \
 	--env MYSQL_DATABASE=dolibarr \
+	--env character_set_client=utf8 \
+	--env character-set-server=utf8mb4 \
+	--env collation-server=utf8mb4_unicode_ci \
 	-d mysql
+
 
 sleep 5 #attente de 5 secondes pour être sûr que le sgbd soit accessible
 
