@@ -5,6 +5,8 @@ docker volume create dolibarr_db
 docker volume create dolibarr_html
 docker volume create dolibarr_docs
 
+docker network create sae51
+
 #ETAPE 2 : creation du conteneur SGBD
 docker run --name SQL_Server \
 	-p 3306:3306 \
@@ -16,6 +18,7 @@ docker run --name SQL_Server \
 	--env character_set_client=utf8 \
 	--env character-set-server=utf8mb4 \
 	--env collation-server=utf8mb4_unicode_ci \
+	--network=sae51 \
 	-d mysql
 
 
