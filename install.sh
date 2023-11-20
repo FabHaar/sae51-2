@@ -23,4 +23,5 @@ docker run --name SQL_Server \
 
 sleep 5 #attente de 5 secondes pour être sûr que le sgbd soit accessible
 
+#ETAPE 3 : 
 mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < dolibarr.sql

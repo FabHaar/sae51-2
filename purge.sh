@@ -7,3 +7,4 @@ docker stop Dolibarr_CRM
 
 docker rm SQL_Server
 docker rm Dolibarr_CRM
+docker network rm sae51
