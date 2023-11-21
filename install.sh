@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#ETAPE 2 : creation des volumes nécessaire
+#ETAPE 1 : creation des volumes nécessaire
 docker volume create dolibarr_db
 docker volume create dolibarr_html
 docker volume create dolibarr_docs
@@ -24,4 +24,4 @@ docker run --name SQL_Server \
 sleep 5 #attente de 5 secondes pour être sûr que le sgbd soit accessible
 
 #ETAPE 3 : 
-mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < dolibarr.sql
+mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql
