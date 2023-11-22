@@ -24,7 +24,7 @@ docker run --name SQL_Server \
 sleep 10 #attente de 10 secondes pour être sûr que le sgbd soit accessible
 
 #ETAPE 3 Creation de la BDD dolibarr:  
-mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql
+mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql 2> /dev/null
 
 #ETAPE 4 : Création du conteneur dolibarr : 
 docker run -p 80:80 \
