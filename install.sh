@@ -31,5 +31,15 @@ docker run -p 80:80 \
 	--name Dolibarr_CRM \
 	--env DOLI_DB_HOST=SQL_Server -d \
 	--env DOLI_DB_NAME=dolibarr \
+	--env DOLI_MODULES=modSociete\
+	--env DOLI_ADMIN_LOGIN=Haar\
+	--env DOLI_ADMIN_PASSWORD=Balete\
 	--network=sae51 \
 	upshift/dolibarr
+
+
+# Ouvre le navigateur par défaut	
+echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"
+sleep 35
+xdg-open http://localhost 2> /dev/null
+
