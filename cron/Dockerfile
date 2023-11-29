@@ -10,4 +10,4 @@ RUN apt-get install cron -y
 
 RUN echo "2 * * * * mysqldump -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 dolibarr > /var/www/documents/save.sql 2> /dev/null" >> /etc/cron.d/crontab
 
-#ajouter cmd lancer cron 
+CMD ["cron", "-f"]
