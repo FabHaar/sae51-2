@@ -22,6 +22,8 @@ docker run --name SQL_Server \
 	-d mysql
 
 sleep 10 #attente de 10 secondes pour être sûr que le sgbd soit accessible
+#creation utilisateur cron
+mysql -u root -p'foo' -h 127.0.0.1 --port=3306 < sql/cron.sql 2> /dev/null
 
 #ETAPE 3 Creation de la BDD dolibarr:  
 mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql 2> /dev/null
