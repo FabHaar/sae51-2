@@ -31,7 +31,6 @@ mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql 2> /d
 #ETAPE 4 : Création du conteneur dolibarr : 
 docker run -p 80:80 \
 	--name Dolibarr_CRM \
-	-v dolibarr_docs:/var/www/documents \
 	--env DOLI_DB_HOST=SQL_Server -d \
 	--env DOLI_DB_NAME=dolibarr \
 	--env DOLI_MODULES=modSociete\
@@ -39,16 +38,18 @@ docker run -p 80:80 \
 	--env DOLI_ADMIN_PASSWORD=Balete\
 	--network=sae51 \
 	upshift/dolibarr
+	
+	#-v dolibarr_docs:/var/www/documents \
 
 #Etape 5 : Création de l'image et du conteneur cron :
 
-./build_image.sh
+#./build_image.sh
 
-docker run -d \
-	--name cron_backup \
-	-v dolibarr_docs:/var/www/documents \
-	--network=sae51 \
-	cron_save
+#docker run -d \
+#	--name cron_backup \
+#	-v dolibarr_docs:/var/www/documents \
+#	--network=sae51 \
+#	cron_save
 
 # Ouvre le navigateur par défaut	
 echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"
