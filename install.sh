@@ -43,13 +43,13 @@ docker run -p 80:80 \
 
 #Etape 5 : Création de l'image et du conteneur cron :
 
-#./build_image.sh
+./build_image.sh
 
-#docker run -d \
-#	--name cron_backup \
-#	-v dolibarr_docs:/var/www/documents \
-#	--network=sae51 \
-#	cron_save
+docker run -d \
+	--name cron_backup \
+	-v dolibarr_docs:/var/www/documents \
+	--network=sae51 \
+	cron_save
 
 # Ouvre le navigateur par défaut	
 echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"

@@ -1,7 +1,7 @@
-CREATE USER 'cron'@'localhost' IDENTIFIED BY 'cron';
+CREATE USER 'cron'@'%' IDENTIFIED BY 'cron';
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'cron'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'cron'@'%';
 
-GRANT SHOW DATABASES, LOCK TABLES, SELECT ON `dolibarr`.* TO 'cron'@'localhost';
+GRANT ALL PRIVILEGES ON `dolibarr`.* TO 'cron'@'%';
 
 FLUSH PRIVILEGES;
