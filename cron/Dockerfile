@@ -1,13 +1,19 @@
-FROM ubuntu:22.04
+FROM alpine:3.16
+#on part de cette image car elle contient deja crond
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install mysql-client -y
+#on installe tzdata pour choisir correctement un fuseau horaire
+#et aussi mysql car c'est ce qui nous interesse
+RUN apk update && \
+	apk add --no-cache \
+		mysql-client
+	tzdata && \
+	rm -rf /var/cache/apk/*
 
-RUN apt-get install cron -y
+ENV TZ=Europe/Paris
 
-#RUN echo "* * * * 7 mysqldump -u cron -p'cron' -h 127.0.0.1 --port=3306 dolibarr > /var/www/documents/save.sql 2> /dev/null" >> /etc/cron.d/crontab
-#pour pousser plus tard, on pourra mettre un script à executer qui vérifie save.sql et qui en créer d'autres
+COPY ./crontabs /etc/crontabs/root
 
-RUN echo "2 * * * * mysqldump -u cron -p'cron' -h SQL_Server --port=3306 dolibarr > /var/www/documents/save.sql" >> /etc/crontab
-
-CMD ["cron", "-f"]
+RUN chown root:root /etc/crontabs/root && \
+	chmod 600 /etc/crontabs/root
+	
+COPY ./save_hebdo.sh /save_hebdo.sh
