@@ -43,7 +43,7 @@ docker run -p 80:80 \
 
 #Etape 5 : Création de l'image et du conteneur cron :
 
-#./build_and_run_cron.sh
+./build_and_run_cron.sh
 
 # Ouvre le navigateur par défaut	
 echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"
