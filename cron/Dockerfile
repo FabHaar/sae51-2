@@ -6,11 +6,13 @@ RUN apt-get install mysql-client -y
 
 RUN apt-get install cron -y
 
-COPY cron/crontabs /etc/crontabs/root
+COPY cron/crontabs /crontabs
 
-RUN chown root:root /etc/crontabs/root && \
-	chmod 600 /etc/crontabs/root
-	
+RUN crontab /crontabs
+
 COPY cron/save_hebdo.sh /save_hebdo.sh
+
+RUN chown root:root /save_hebdo.sh && \
+	chmod u+x /save_hebdo.sh
 
 CMD ["cron", "-f"]
