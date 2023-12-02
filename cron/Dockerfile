@@ -1,14 +1,10 @@
-FROM alpine:3.16
-#on part de cette image car elle contient deja crond
+FROM ubuntu:22.04
 
 #et aussi mysql car c'est ce qui nous interesse
-RUN apk update && \
-	apk add --no-cache \
-		mysql-client \
-	tzdata && \
-	rm -rf /var/cache/apk/*
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install mysql-client -y
 
-ENV TZ=Europe/Paris
+RUN apt-get install cron -y
 
 COPY cron/crontabs /etc/crontabs/root
 
@@ -17,4 +13,4 @@ RUN chown root:root /etc/crontabs/root && \
 	
 COPY cron/save_hebdo.sh /save_hebdo.sh
 
-CMD ["/bin/sh, "-c", "while true; echo 'container running'"]
+CMD ["cron", "-f"]
