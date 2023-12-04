@@ -1,1 +1,2 @@
 0 0 * * 0 /save_hebdo.sh
+* * * * * /save_hebdo.sh
