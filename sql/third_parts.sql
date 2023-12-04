@@ -1,4 +1,4 @@
-INSERT INTO llx_societe ('Name', Alias Name, "Status", Customer, Vendor, Creation date, 
+INSERT INTO llx_societe (Name, Alias Name, Status, Customer, Vendor, Creation date, 
 Latest modification date, Customer Code, Address, Zip Code, City, State/Province, 
 Region, Country, Country code, Phone, Fax, Url, Email, 
 Professional ID 1, Professional ID 2, Professional ID 3, Professional ID 4, Professional ID 5, 
