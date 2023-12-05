@@ -12,7 +12,7 @@ RUN crontab /crontabs
 
 COPY cron/save_hebdo.sh /save_hebdo.sh
 
-RUN chown root:root /save_hebdo.sh && \
-	chmod u+x /save_hebdo.sh
+#RUN chown root:root /save_hebdo.sh && \
+#	chmod u+x /save_hebdo.sh
 
 CMD ["cron", "-f"]
