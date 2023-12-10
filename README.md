@@ -10,10 +10,23 @@ Groupe FI
 | **Conteneurs** |                 **Conteneur Dolibarr**                |                        **Conteneur mysql**                        |                 **Conteneur cron**                 |
 |:--------------:|:-----------------------------------------------------:|:-----------------------------------------------------------------:|:--------------------------------------------------:|
 |    **Image**   |                    upshift/dolibarr                    |                               mysql                               | cron_save (personalisée à partir d'un image ubuntu) |
-|  **Fonction** | Logiciel Dolibarr accessible depuis une interface web | Base de données permettant à Dolibarr de focntionner correctement |         Serveur de sauvegarde hebdomadaire         |
+|  **Fonction** | Logiciel Dolibarr accessible depuis une interface web | Base de données permettant à Dolibarr de fonctionner correctement |         Serveur de sauvegarde hebdomadaire         |
 
-Le script `install.sh` lance dans l'ordre :
-- Le conteneur mysql :<br>
+
+## 2 Mise en place et utilisation de Dolibarr:
+
+Pour la mise en place de Dolibarr, il suffit de lancer le script `install.sh` qui execute dans l'ordre les Etapes suivantes (correspondantes aux étapes commentées dans le script):
+
+### Etape 1 :
+
+Creation des volumes nécessaires pour la persistance des données au travers des deux commandes :<br>
+`docker volume create dolibarr_db` <br>
+`docker volume create dolibarr_docs`<br>
+Puis, creation du réseau qui servira à tous les conteneurs la possibilité de pouvoir communiquer : <br>
+`docker network create sae51` <br>
+
+### Etape 2 :
+Creation du conteneur mysql au travers de la commande:<br>
 `docker run --name SQL_Server \`<br>
 `-p 3306:3306 \`<br>
 `-v dolibarr_db:/var/lib/mysql \`<br>
@@ -25,11 +38,42 @@ Le script `install.sh` lance dans l'ordre :
 `--env character-set-server=utf8mb4 \`<br>
 `--env collation-server=utf8mb4_unicode_ci \`<br>
 `-network=sae51 \`<br>
-`-d mysql`
-- Le conteneur Dolibarr :
+`-d mysql`<br><br>
+Puis une attente de quelques secondes au travers de la commande :<br>
+`sleep 10`<br>
+Cette attente est nécessaire pour permettre au SGBD d'être correctement accessible via un client mysql.<br><br>
+Il est important de noter qu'en aucun cas un conteneur utilisera l'utilisateur root de la base de données pouyr s'y connecter.
+### Etape 3 :
 
-## 2 : 
+Creation de la base de données `dolibarr` via la commande : <br>
+`mysql -u dolibarr -p'dolibarr' -h 127.0.0.1 --port=3306 < sql/dolibarr.sql 2> /dev/null`<br>
+Le fichier `dolibarr.sql` contient l'instruction nécessaire pour la création de la base de données :<br> 
+`CREATE DATABASE dolibarr;`
 
+### Etape 4 :
+Creation du conteneur Dolibarr via la commande :<br>
+`docker run -p 80:80 \ `<br>
+`--name Dolibarr_CRM \ `<br>
+`--env DOLI_DB_HOST=SQL_Server -d \ `<br>
+`--env DOLI_DB_NAME=dolibarr \ `<br>
+`--env DOLI_MODULES=modSociete\ `<br>
+`--env DOLI_ADMIN_LOGIN=Haar\ `<br>
+`--env DOLI_ADMIN_PASSWORD=Balete\ `<br>
+`--network=sae51 \ `<br>
+`upshift/dolibarr`
+
+### Etape 5 :
+
+Execution du script `build_and_run_cron.sh`:<br> 
+Construction de l'image pour le conteneur cron :<br>
+`docker build -t cron_save -f cron/Dockerfile .`<br>
+
+Puis lancement du conteneur :<br>
+`docker run -d \ `<br>
+`--name cron_backup \ `<br>
+`-v dolibarr_docs:/var/www/documents \ `<br>
+`--network=sae51 \ `<br>
+`cron_save`
 
 # Troubleshooting : 
 ## Probleme 1 :
