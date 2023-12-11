@@ -47,7 +47,7 @@ docker run -p 80:80 \
 ./build_and_run_cron.sh
 
 # Ouvre le navigateur par défaut	
-#echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"
-#sleep 35
-#xdg-open http://localhost 2> /dev/null
+echo "Ouverture de la page... attente du fonctionnement des processus (~35 sec)"
+sleep 35
+xdg-open http://localhost 2> /dev/null
 
