@@ -82,9 +82,8 @@ Première implémentation dockerisé : solution BDD -- Dolibarr et ses dépendan
 (passer de docker compose avec mariaDB à docker run sur mysql et le reste)
 
 Premier esssai d'implémentation en suivant https://github.com/upshift-docker/dolibarr pour la creation d'un docker-compose permettant l'implementation de dolibarr.
-Le fichier docker-compose.yml permettait en théorie de faire l'installation de mariadb dans une conteneur paramètrer de sorte qu'il y est création de base de donnée, une communication directe avec le second conteneur créee, celui d'une image dolibarr modifier pour permettre de manipuler l'installation avec des variable pour la preset, ainsi que toute les solutions nécessaire embarquer au fonctionnement de dolibarr (apache2, serveur php...) . 
+Le fichier docker-compose.yml permettait en théorie de faire l'installation de mariadb dans un conteneur paramétrer de sorte qu'il y est création de base de donnée, une communication directe avec le second conteneur créé, celui d'une image dolibarr modifier pour permettre de manipuler l'installation avec des variable pour la preset, ainsi que toute les solutions nécessaire embarquer au fonctionnement de dolibarr (apache2, serveur php...) . 
 finalement cette solution ne fonctionnait pas complétement alors nous l'avons adapté en reprenant tout d'abord, une base de donnée mysql comme le projet précédent, mais aussi en ne passant plus par un docker-compose.yml mais simplement avec un script pour lancer 2 conteneurs (docker run ...)
-[photo différence docker-compose.yml avec notre implémentation ???]
 
 ## Probleme 2 :
 (problème de connection entre le dolibarr et mysql --> solution, ajout de network entre les 2)
@@ -97,7 +96,7 @@ Et lors de la création de chaque conteneur, spécifier l'option : <br>
 `--network=sae51`
 
 ## Probleme 3 :
-(enfin, problème de création de la Database avec la variable env MYSQL_DATABASE qui n'étais pas prise en compte --> solution, crée la database grâce à l'envoie d'une requete)
+(enfin, problème de création de la Database avec la variable env MYSQL_DATABASE qui n'étais pas prise en compte --> solution, crée la database grâce à l'envoie d'une requête)
 
 Pour finir, nous avions une erreur lors de la récupération par dolibarr de la base de données appelé "dolibarr" (nom dolibarr inconnu) pour cause elle n'était pas correctement créée.
 Malgré l'utilisation de la variable d'environnement MYSQL_DATABASE qui est censé permettre la création de la base de donnée à l'initialisation du SGBD, la base de données n'était pas présente, la variable n'était pas prise en compte comparé aux autres variables d'environnement présentes permettant d'autre paramétrages.
